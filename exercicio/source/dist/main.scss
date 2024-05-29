@@ -1,0 +1,85 @@
+@use './config/reset.scss';
+@use './config/variaveis.scss';
+@use './config/button.scss';
+@use './config/responsive.scss';
+@use 'sass:math';
+
+@function pixelParaEm($alvoEmPixel, $contextoEmPixel: 16px) {
+    @return math.div($alvoEmPixel, $contextoEmPixel) + em;
+}
+
+@mixin container($max-width) {
+    max-width: pixelParaEm($max-width);
+    width: 100%;
+    margin: 0 auto;
+}
+
+@mixin flex-container($justify: space-between, $align: center) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin padding($padding) {
+    padding: $padding;
+}
+
+@mixin product-grid($columns: 3, $col-gap: 1%, $row-gap: 4%) {
+    display: grid;
+    grid-template-columns: repeat($columns, calc((100% - (#{$columns - 1} * #{$col-gap})) / $columns));
+    column-gap: $col-gap;
+    row-gap: $row-gap;
+    width: 100%;
+}
+
+body {
+    background-color: variaveis.$bodyback;
+}
+
+.container {
+    @include container(1024px);
+}
+
+li {
+    list-style: none;
+}
+
+header {
+    background-color: variaveis.$headercolor;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+header .container {
+    @include flex-container;
+    @include padding(16px 0);
+}
+
+.menu {
+    display: flex;
+}
+
+.menu li {
+    font-weight: bold;
+    margin-left: 24px;
+}
+
+.menu li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+section {
+    @include padding(56px 0);
+}
+
+.products {
+    margin-top: 40px;
+    @include product-grid(3, 1%, 4%);
+}
+
+.product-item img {
+    width: 100%;
+    border-radius: 16px;
+}
